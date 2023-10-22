@@ -689,6 +689,27 @@
      (enable-all-pages-public-row t enable-all-pages-public?)
      (auto-push-row t current-repo enable-git-auto-push?)]))
 
+(rum/defcs switch-sync-override-endpoint < rum/reactive
+  [state t]
+  (let [enabled? (state/get-git-auto-commit-enabled?)]
+    [:div.it.sm:grid.sm:grid-cols-3.sm:gap-4.sm:items-start
+     [:label.block.text-sm.font-medium.leading-5.opacity-70
+      (t :settings-page/git-switcher-label)]
+     [:div
+      [:div.rounded-md.sm:max-w-xs
+       (ui/toggle
+         enabled?
+         (fn []
+           (state/set-state! [:electron/user-cfgs :git/disable-auto-commit?] enabled?)
+           (ipc/ipc :userAppCfgs :git/disable-auto-commit? enabled?))
+         true)]]]))
+
+(rum/defc settings-async
+  []
+  [
+   (switch-sync-override-endpoint t)
+   (git-auto-commit-seconds t)])
+
 (rum/defc settings-git
   []
   [:div.panel-wrap
@@ -713,11 +734,26 @@
      :warning
      [:p (t :settings-page/git-confirm)])])
 
+(rum/defcs custom-sync-endpoint < rum/reactive
+  [state t]
+  (let [enabled? (if (= nil (state/sub [:electron/user-cfgs :feature/enable-automatic-chmod?]))
+                   true
+                   (state/sub [:electron/user-cfgs :feature/enable-automatic-chmod?]))]
+    (toggle
+     "automatic-chmod"
+     (t :settings-page/auto-chmod)
+     enabled?
+     #(do
+       (state/set-state! [:electron/user-cfgs :feature/enable-automatic-chmod?] (not enabled?))
+       (ipc/ipc :userAppCfgs :feature/enable-automatic-chmod? (not enabled?)))
+     [:span.text-sm.opacity-50 (t :settings-page/auto-chmod-desc)])))
+
 (rum/defc settings-advanced < rum/reactive
   [current-repo]
   (let [instrument-disabled? (state/sub :instrument/disabled?)
         developer-mode? (state/sub [:ui/developer-mode?])
-        https-agent-opts (state/sub [:electron/user-cfgs :settings/agent])]
+        https-agent-opts (state/sub [:electron/user-cfgs :settings/agent])
+        sync-override-endpoint (or (state/sub [:sync/custom-endpoint]) config/API-DOMAIN)]
     [:div.panel-wrap.is-advanced
      (when (and (or util/mac? util/win32?) (util/electron?)) (app-auto-update-row t))
      (usage-diagnostics-row t instrument-disabled?)
@@ -726,6 +762,7 @@
      (when (util/electron?) (auto-chmod-row t))
      (when (and (util/electron?) (not (config/demo-graph? current-repo))) (filename-format-row))
      (clear-cache-row t)
+     (when-not web-platform? (custom-sync-endpoint t))
 
      (ui/admonition
        :warning

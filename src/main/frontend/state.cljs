@@ -1907,6 +1907,10 @@ Similar to re-frame subscriptions"
   []
   (false? (sub [:electron/user-cfgs :git/disable-auto-commit?])))
 
+(defn get-sync-override-endpoint
+  []
+  (false? (sub [:sync/custom-endpoint])))
+
 (defn set-last-key-code!
   [key-code]
   (set-state! :editor/last-key-code key-code))
