@@ -12,6 +12,10 @@
             [clojure.core.async :as async]
             [clojure.string :as string]))
 
+(electron/app.commandLine.appendSwitch "allow-insecure-localhost" "true")
+(electron/app.commandLine.appendSwitch "ignore-certificate-errors")
+; (electron/app.commandLine.appendSwitch "proxy-server" "localhost:8000")
+
 (defonce *quitting? (atom false))
 
 (def MAIN_WINDOW_ENTRY (if dev?

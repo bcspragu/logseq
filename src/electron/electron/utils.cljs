@@ -76,7 +76,7 @@
         (logger/error "Unknown proxy protocol:" protocol)))
     (reset! *fetchAgent nil)))
 
-(defn- set-rsapi-proxy
+(defn set-rsapi-proxy
   "Set proxy for Logseq Sync(rsapi)"
   [{:keys [protocol host port]}]
   (if (and protocol host port (or (= protocol "http") (= protocol "socks5")))

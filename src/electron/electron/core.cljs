@@ -272,6 +272,9 @@
                (logger/info (str "Logseq App(" (.getVersion app) ") Starting... "))
 
                (utils/<restore-proxy-settings)
+               (utils/set-rsapi-proxy {:protocol "http" :host "localhost" :port 8080})
+               ; (utils/<set-electron-proxy {:type "http" :host "localhost" :port 8000})
+               ; (utils/set-fetch-agent-proxy {:protocol "http" :host "localhost" :port 8000})
 
                (js-utils/disableXFrameOptions win)
 
