@@ -60,6 +60,7 @@
 #?(:cljs (defonce el-visible-in-viewport? utils/elementIsVisibleInViewport))
 #?(:cljs (defonce convert-to-roman utils/convertToRoman))
 #?(:cljs (defonce convert-to-letters utils/convertToLetters))
+#?(:cljs (defonce hsl2hex utils/hsl2hex))
 
 (defn string-join-path
   "Replace all `strings/join` used to construct paths with this function to reduce lint output.
@@ -224,6 +225,13 @@
 (defn find-first
   [pred coll]
   (first (filter pred coll)))
+
+(defn find-index
+  "Find first index of an element in list"
+  [pred-or-val coll]
+  (let [pred (if (fn? pred-or-val) pred-or-val #(= pred-or-val %))]
+    (reduce-kv #(if (pred %3) (reduced %2) %1) -1
+               (cond-> coll (list? coll) (vec)))))
 
 ;; (defn format
 ;;   [fmt & args]
@@ -986,7 +994,7 @@
      (when s
        (let [normalize-str (.normalize (string/lower-case s) "NFKC")]
          (if remove-accents?
-           (removeAccents  normalize-str)
+           (removeAccents normalize-str)
            normalize-str)))))
 
 #?(:cljs
@@ -1025,17 +1033,6 @@
                      (d/set-attr! :href style)
                      (d/set-attr! :media "all"))]
            (d/append! parent-node link))))))
-
-(defn ->platform-shortcut
-  [keyboard-shortcut]
-  (let [result (or keyboard-shortcut "")
-        result (string/replace result "left" "←")
-        result (string/replace result "right" "→")]
-    (if mac?
-      (-> result
-          (string/replace "Ctrl" "Cmd")
-          (string/replace "Alt" "Opt"))
-      result)))
 
 (defn remove-common-preceding
   [col1 col2]
@@ -1128,11 +1125,11 @@
                will poll it when its return value is channel,
   - :flush-fn exec flush-fn when time to flush, (flush-fn item-coll)
   - :stop-ch stop go-loop when stop-ch closed
-  - :distinct-coll? distinct coll when put into CH
+  - :distinct-key-fn distinct coll when put into CH
   - :chan-buffer buffer of return CH, default use (async/chan 1000)
   - :flush-now-ch flush the content in the queue immediately
   - :refresh-timeout-ch refresh (timeout max-duration)"
-     [in-ch max-duration & {:keys [filter-fn flush-fn stop-ch distinct-coll? chan-buffer flush-now-ch refresh-timeout-ch]}]
+     [in-ch max-duration & {:keys [filter-fn flush-fn stop-ch distinct-key-fn chan-buffer flush-now-ch refresh-timeout-ch]}]
      (let [ch (if chan-buffer (async/chan chan-buffer) (async/chan 1000))
            stop-ch* (or stop-ch (async/chan))
            flush-now-ch* (or flush-now-ch (async/chan))
@@ -1160,8 +1157,8 @@
                                (async/<! filter-v)
                                filter-v)]
                (if filter-v*
-                 (recur timeout-ch (cond-> (conj coll e)
-                                     distinct-coll? distinct
+                 (recur timeout-ch (cond->> (conj coll e)
+                                     distinct-key-fn (distinct-by distinct-key-fn)
                                      true vec))
                  (recur timeout-ch coll)))
 
@@ -1284,10 +1281,6 @@
 
 (comment
   (re-matches (re-pattern (regex-escape "$u^8(d)+w.*[dw]d?")) "$u^8(d)+w.*[dw]d?"))
-
-#?(:cljs
-   (defn meta-key-name []
-     (if mac? "Cmd" "Ctrl")))
 
 #?(:cljs
    (defn meta-key? [e]
@@ -1434,6 +1427,23 @@
      (p/create
       (fn [resolve]
         (load url resolve)))))
+
+#?(:cljs
+   (defn css-load$
+     ([url] (css-load$ url nil))
+     ([url id]
+      (p/create
+       (fn [resolve reject]
+         (let [id (str "css-load-" (or id url))]
+           (if-not (gdom/getElement id)
+             (let [^js link (js/document.createElement "link")]
+               (set! (.-id link) id)
+               (set! (.-rel link) "stylesheet")
+               (set! (.-href link) url)
+               (set! (.-onload link) resolve)
+               (set! (.-onerror link) reject)
+               (.append (.-head js/document) link))
+             (resolve))))))))
 
 #?(:cljs
    (defn copy-image-to-clipboard
