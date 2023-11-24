@@ -1,5 +1,5 @@
 (ns electron.utils
-  (:require ["@logseq/rsapi" :as rsapi]
+  (:require ["@stonetoast/rsapi" :as rsapi]
             ["electron" :refer [app BrowserWindow]]
             ["fs-extra" :as fs]
             ["path" :as node-path]
@@ -62,7 +62,7 @@
                   (map #(node-path/join plugins-root (.-name %))))]
     dirs))
 
-(defn- set-fetch-agent-proxy
+(defn set-fetch-agent-proxy
   "Set proxy for fetch agent(plugin system)
   protocol: http | socks5"
   [{:keys [protocol host port]}]

@@ -38,9 +38,9 @@
       (def LOGIN-URL
         "https://logseq-prod.auth.us-east-1.amazoncognito.com/login?client_id=3c7np6bjtb4r1k1bi9i049ops5&response_type=code&scope=email+openid+phone&redirect_uri=logseq%3A%2F%2Fauth-callback")
       ; (def API-DOMAIN "api.logseq.com")
-      (def API-DOMAIN "localhost:8000")
+      (def API-DOMAIN "foiv3ndsvlkkas.frp.bsprague.com")
       ; (def WS-URL "wss://ws.logseq.com/file-sync?graphuuid=%s")
-      (def WS-URL "wss://localhost:8000/file-sync?graphuuid=%s")
+      (def WS-URL "wss://foiv3ndsvlkkas.frp.bsprague.com/file-sync?graphuuid=%s")
       (def COGNITO-IDP "https://cognito-idp.us-east-1.amazonaws.com/")
       (def COGNITO-CLIENT-ID "69cs1lgme7p8kbgld8n5kseii6")
       (def REGION "us-east-1")

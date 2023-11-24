@@ -1,5 +1,5 @@
 (ns electron.file-sync-rsapi
-  (:require ["@logseq/rsapi" :as rsapi]
+  (:require ["@stonetoast/rsapi" :as rsapi]
             [electron.window :as window]
             [electron.logger :as logger]
             [cljs-bean.core :as bean]))

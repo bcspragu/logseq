@@ -14,7 +14,7 @@
 
 (electron/app.commandLine.appendSwitch "allow-insecure-localhost" "true")
 (electron/app.commandLine.appendSwitch "ignore-certificate-errors")
-; (electron/app.commandLine.appendSwitch "proxy-server" "localhost:8000")
+; (electron/app.commandLine.appendSwitch "proxy-server" "localhost:8080")
 
 (defonce *quitting? (atom false))
 
