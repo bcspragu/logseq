@@ -562,10 +562,47 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.6.0.tgz#3c7c9c46e678feefe7a2e5bb609d3dbd665ffb3f"
   integrity sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==
 
-"@stonetoast/rsapi@0.0.78":
-  version "0.0.78"
-  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi/-/rsapi-0.0.78.tgz#e6dc72a66f0c7a008b853ef5375a76af5700944a"
-  integrity sha512-JES7JAlvpEiK7hOoLCYrUqo2YggU92LH/VS7OUEp0lSF39hwFC/L1SqGf873eG+fXrdjJVbRsjNWU/z1FNTu9Q==
+"@stonetoast/rsapi-darwin-arm64@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-darwin-arm64/-/rsapi-darwin-arm64-0.0.80.tgz#699052780a3dfbed50b9dbf77ac83f8d12398dee"
+  integrity sha512-akx7ZtF+sk6ZkmiSj113P74VDz3jPbatDkg3EhC1PbKkaSdcdU01je5ihdR/g64YcmbyPlQ/60smXECRnQkOMA==
+
+"@stonetoast/rsapi-darwin-x64@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-darwin-x64/-/rsapi-darwin-x64-0.0.80.tgz#0de223d5e9a6dc9f9333e2e68f8393fa05dbf2f7"
+  integrity sha512-xA3U18FSjzDKU/vzk+PYFBpEb8F4qtbI49zDPXurrKrMOommpP6cixT9HhHu0iSCWmBXn5tx015TvxnLQeovBg==
+
+"@stonetoast/rsapi-freebsd-x64@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-freebsd-x64/-/rsapi-freebsd-x64-0.0.80.tgz#5046d267de81865c33a3186b7acc4bd4c5afe9a9"
+  integrity sha512-DEYa2jFtVRozLu9ydF/wSpkZWqxJfgaS4b9egvxZYsbX/l6545xyoh6mohn2/ZA4M52NPVDSZ6XcYszRvpi4kg==
+
+"@stonetoast/rsapi-linux-arm64-gnu@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-linux-arm64-gnu/-/rsapi-linux-arm64-gnu-0.0.80.tgz#873dfe203283fcc4c9069f2c724b0657ec370dbc"
+  integrity sha512-CbQU1KaHEVOafFidZeXki3V+ZwwcjuyAh5s6TDblF6yY9ejQkxUPHaUPz2eyhcjCY7p+JrLtzrch+x8jPKQQVw==
+
+"@stonetoast/rsapi-linux-x64-gnu@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-linux-x64-gnu/-/rsapi-linux-x64-gnu-0.0.80.tgz#f5d7b403f363ce40d8a6cc54a5562ffe2783463d"
+  integrity sha512-CR/J60ztktc3xXeUNjDeV8+fOexvQ/ssWQk7My/Ol7n+z7R7W7dv9eG3/X9ue6IZTkK6nV8NqZlbdDk0ElNqJg==
+
+"@stonetoast/rsapi-win32-x64-msvc@0.0.80":
+  version "0.0.80"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi-win32-x64-msvc/-/rsapi-win32-x64-msvc-0.0.80.tgz#a9b8f2387b805af3e179f2e2181cdd18780c75bb"
+  integrity sha512-EUIiHtNJGbXIpC1GixLkXB3OGH1x0FwKplNWKqbvtuq2K4fQALTDONia/ZIqPDvAtmasqwFUgelrvn/n4o4eKA==
+
+"@stonetoast/rsapi@0.0.81":
+  version "0.0.81"
+  resolved "https://registry.yarnpkg.com/@stonetoast/rsapi/-/rsapi-0.0.81.tgz#8ec930de6fa8eaed8a01b836afcd503552899ad5"
+  integrity sha512-u2DLw/9uEemYd5asF7qje82EcvlQDt1kf+Y4EEoW/GnWmym7CY5Us5tniT6PX2Ok0hko5PF4O5ROgkYKs0R5yw==
+  optionalDependencies:
+    "@stonetoast/rsapi-darwin-arm64" "0.0.80"
+    "@stonetoast/rsapi-darwin-x64" "0.0.80"
+    "@stonetoast/rsapi-freebsd-x64" "0.0.80"
+    "@stonetoast/rsapi-linux-arm64-gnu" "0.0.80"
+    "@stonetoast/rsapi-linux-x64-gnu" "0.0.80"
+    "@stonetoast/rsapi-win32-x64-msvc" "0.0.80"
 
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
